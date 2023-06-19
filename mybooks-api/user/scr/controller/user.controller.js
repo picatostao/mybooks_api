@@ -38,13 +38,17 @@ const login=async(req,res)=>{
 }
 const update=async(req,res)=>{
     console.log("entrando");
-  try{  let {id_user}=req.body
-    let{name, last_name,email,photo,password }=req.body
-    await pool.query(
-        "UPDATE user SET name=?, last_name=?, email=?, photo=?, password=? WHERE id_user=?",[name, last_name,email,photo,password,id_user]
-    )
-    res.send({error:false, codigo:200, mensaje:"usuario actualizado"})
-    console.log("cambiado");
+  try{  
+    let{name, last_name,email,photo,password, id_user }=req.body
+
+
+    let sql = "UPDATE user SET name=?, last_name=?, email=?, photo=?, password=? WHERE id_user=?"
+    let [update] = await pool.query(sql, [name, last_name,email,photo,password,id_user])
+    if(update.length > 0){
+        respuesta = {error:false, codigo:200, mensaje:"usuario actualizado", data : data_user}
+        console.log("cambiado");
+        res.send(respuesta)
+    }
 } catch (error){
     console.log(error);
     res.send({error:true, codigo:200, mensaje:"no actualizado"})

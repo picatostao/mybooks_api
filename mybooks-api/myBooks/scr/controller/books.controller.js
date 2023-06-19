@@ -4,27 +4,35 @@ const{pool}=require("../database")
 const getUserBooks=async (req, res)=>{
     const {id_user}=req.params
     try{
-        const[books]=await pool.query('SELECT * FROM book WHERE id_user=?', [id_user])
-        respuesta={ error:false, codigo:200, mensaje:'libros encontrados',books}
+        let respuesta
+        let sql='SELECT * FROM book WHERE id_user=?'
+        const[books]=await pool.query(sql , [id_user])
+        console.log(books)
+        respuesta={ error:false, codigo:200, mensaje:'libros encontrados',data : books}
         res.send(respuesta)
+        console.log(respuesta);
     }catch(error){
         respuesta={error:true, codigo:200, mensaje:'error al obtener libros',error}
         console.log(error);
         console.log('error al obtener los libros de usuario',error);
         res.send(respuesta);
+        
     } 
 }
 
 const getBookUser=async (req,res)=>{
     const{id_user, id_book}=req.params
     try{
-        const[book]=await pool.query("SELECT * FROM book WHERE id_user=? AND id_book=?",[id_user,id_book])
+
+        let sql = "SELECT * FROM book WHERE id_user=? AND id_book=?"
+      
+        const[book]=await pool.query(sql,  [id_user,id_book] )
         if (book.length===0){
             respuesta={error:true, codigo:404, mensaje:"libro no encontrado"}
             console.log('libro no encontrado');
             res.send(respuesta)
         }else{
-            respuesta={error:false, codigo:200, mensaje:'libros obtenidos correctamente',book}
+            respuesta={error:false, codigo:200, mensaje:'libros obtenidos correctamente',data : book}
             res.send(respuesta)
         }
     }catch(error){
