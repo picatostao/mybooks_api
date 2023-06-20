@@ -1,4 +1,4 @@
-const{pool}=require("../database")
+const{pool}=require("../../../user/scr/database")
 
 const register=async(req,res)=>{
     try{
