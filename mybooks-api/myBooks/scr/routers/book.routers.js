@@ -4,13 +4,11 @@ const bookCtrl = require("../controller/book.controller");
 const bookscrtl=require('../controller/books.controller')
 const userCtrl=require("../controller/user.controller");
 
-router.get("/book", bookCtrl.getBook);
+router.post("/register", userCtrl.register);
 
-router.post("/book", bookCtrl.postBook);
+router.post("/login", userCtrl.login);
 
-router.delete("/book", bookCtrl.deleteBook);
-
-router.put("/book", bookCtrl.putBook)
+router.put("/user", userCtrl.update)
 
 router.get("/books/:id_user", bookscrtl.getUserBooks)
 
@@ -22,11 +20,15 @@ router.put("/books/:id_user/:id_book", bookscrtl.updateUserBook)
 
 router.delete("/books/:id_user/:id_book", bookscrtl.deleteUserBook)
 
-router.post("/register", userCtrl.register);
 
-router.post("/login", userCtrl.login);
 
-router.put("/update", userCtrl.update)
+router.get("/book", bookCtrl.getBook);
+
+router.post("/book", bookCtrl.postBook);
+
+router.delete("/book", bookCtrl.deleteBook);
+
+router.put("/book", bookCtrl.putBook)
 
 
 module.exports=router

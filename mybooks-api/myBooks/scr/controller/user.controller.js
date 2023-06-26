@@ -1,4 +1,4 @@
-const{pool}=require("../../../user/scr/database")
+const{pool}=require("../database")
 
 const register=async(req,res)=>{
     try{
@@ -18,11 +18,12 @@ const register=async(req,res)=>{
 const login=async(req,res)=>{
    try{
     console.log(req.body);
+    console.log("entrando");
     if(req.body.email && req.body.password){
         let sql="SELECT id_user, name, last_name, email, photo FROM user WHERE email='"+req.body.email+"'and password='"+req.body.password+"'"
         console.log(sql)
         let[result]=await pool.query(sql);
-        console.log(result)
+        console.log("resultado",result)
         if(result.length>0){
             respuesta={error:false, codigo:200, mensaje:"log correcto",data_user :result}
             res.send(respuesta)
